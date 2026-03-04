@@ -16,6 +16,8 @@ ELSD/
 │   ├── RenderMap.java          # 3/4 perspective renderer
 │   ├── TextureGenerator.java   # Programmatic pixel-art texture generator
 │   └── MapLang*.java           # ANTLR-generated lexer/parser/visitor
+├── lib/            # Dependencies
+│   └── antlr.jar               # ANTLR 4 runtime (bundled)
 ├── maps/           # Map definition files (.map)
 ├── textures/       # Tile PNG textures (32x32 ground, 32x64 objects)
 ├── output/         # Rendered PNG images
@@ -25,20 +27,20 @@ ELSD/
 ## Prerequisites
 
 - **JDK 25** (Eclipse Adoptium or similar)
-- **ANTLR 4** JAR at `C:\antlr\antlr.jar`
+- **ANTLR 4** JAR is bundled in `lib/antlr.jar` — no extra setup needed
 
 ## Usage
 
 ### Compile (only needed after changing `.java` files)
 
 ```powershell
-javac -cp "src;C:\antlr\antlr.jar" -d src src\*.java
+javac -cp "src;lib/antlr.jar" -d src src\*.java
 ```
 
 ### Render a map
 
 ```powershell
-java -cp "src;C:\antlr\antlr.jar" Main maps\test.map
+java -cp "src;lib/antlr.jar" Main maps\test.map
 ```
 
 Output is saved to `output\<mapname>.png` (e.g. `maps\test.map` → `output\test.png`).

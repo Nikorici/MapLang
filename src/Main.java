@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
-            System.out.println("Usage: java -cp src;C:\\antlr\\antlr.jar Main maps/<file.map>");
+            System.out.println("Usage: java -cp src;lib/antlr.jar Main maps/<file.map>");
             return;
         }
 

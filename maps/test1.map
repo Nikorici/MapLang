@@ -1,0 +1,29 @@
+map GreenHollow {
+  size 10, 10;
+  
+  tile HOUSE at (3,2);
+
+  tile DIRT at (3,2);
+
+  tile FENCE at (2,2);
+  tile FENCE at (2,1);
+  tile FENCE at (3,1);
+  tile FENCE at (4,1);
+  tile FENCE at (4,2);
+  tile FENCE at (4,3);
+  tile FENCE at (2,3);
+
+
+  tile PATH at (3,3);
+  tile PATH at (3,4);
+  tile PATH at (3,5);
+  tile PATH at (4,5);
+  tile PATH at (4,6);
+  tile PATH at (4,7);
+  tile PATH at (4,8);
+  
+
+
+
+  player at (4,9);
+}
