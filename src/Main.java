@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
-            System.out.println("Usage: java -cp .;C:\\antlr\\antlr.jar Main <file.map>");
+            System.out.println("Usage: java -cp src;C:\\antlr\\antlr.jar Main maps/<file.map>");
             return;
         }
 
@@ -23,9 +23,8 @@ public class Main {
 
         // print AST as JSON
         System.out.println(toJson(ast));
-        RenderMap.render(ast);
+        RenderMap.render(ast, args[0]);
     }
-    
 
     static String toJson(MapAst m) {
         StringBuilder sb = new StringBuilder();
@@ -37,16 +36,17 @@ public class Main {
         for (int i = 0; i < m.tiles.size(); i++) {
             TileAst t = m.tiles.get(i);
             sb.append("    {\"type\":\"").append(t.type)
-              .append("\",\"x\":").append(t.x)
-              .append(",\"y\":").append(t.y).append("}");
-            if (i < m.tiles.size() - 1) sb.append(",");
+                    .append("\",\"x\":").append(t.x)
+                    .append(",\"y\":").append(t.y).append("}");
+            if (i < m.tiles.size() - 1)
+                sb.append(",");
             sb.append("\n");
         }
         sb.append("  ],\n");
 
         if (m.player != null) {
             sb.append("  \"player\": {\"x\":").append(m.player.x)
-              .append(",\"y\":").append(m.player.y).append("}\n");
+                    .append(",\"y\":").append(m.player.y).append("}\n");
         } else {
             sb.append("  \"player\": null\n");
         }

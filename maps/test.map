@@ -1,0 +1,165 @@
+map GreenHollow {
+  size 24, 18;
+
+  tile PATH at (0,9);
+  tile PATH at (1,9);
+  tile PATH at (2,9);
+  tile PATH at (3,9);
+  tile PATH at (4,9);
+  tile PATH at (5,9);
+  tile PATH at (6,9);
+  tile PATH at (7,9);
+  tile PATH at (8,9);
+  tile PATH at (9,9);
+  tile PATH at (10,9);
+  tile PATH at (11,9);
+  tile PATH at (12,9);
+  tile PATH at (13,9);
+  tile PATH at (14,9);
+  tile PATH at (15,9);
+  tile PATH at (16,9);
+  tile PATH at (17,9);
+  tile PATH at (18,9);
+  tile PATH at (19,9);
+  tile PATH at (20,9);
+  tile PATH at (21,9);
+  tile PATH at (22,9);
+  tile PATH at (23,9);
+
+  tile PATH at (6,3);
+  tile PATH at (6,4);
+  tile PATH at (6,5);
+  tile PATH at (6,6);
+  tile PATH at (6,7);
+  tile PATH at (6,8);
+
+  tile PATH at (17,5);
+  tile PATH at (17,6);
+  tile PATH at (17,7);
+  tile PATH at (17,8);
+
+  tile PATH at (12,10);
+  tile PATH at (12,11);
+  tile PATH at (12,12);
+  tile PATH at (12,13);
+
+  tile HOUSE at (7,3);
+  tile HOUSE at (18,4);
+
+  tile FENCE at (4,2);
+  tile FENCE at (5,2);
+  tile FENCE at (6,2);
+  tile FENCE at (7,2);
+  tile FENCE at (8,2);
+  tile FENCE at (9,2);
+  tile FENCE at (4,3);
+  tile FENCE at (9,3);
+  tile FENCE at (4,4);
+  tile FENCE at (9,4);
+  tile FENCE at (4,5);
+  tile FENCE at (5,5);
+  tile FENCE at (7,5);
+  tile FENCE at (8,5);
+  tile FENCE at (9,5);
+
+  tile FENCE at (15,3);
+  tile FENCE at (16,3);
+  tile FENCE at (17,3);
+  tile FENCE at (18,3);
+  tile FENCE at (19,3);
+  tile FENCE at (20,3);
+  tile FENCE at (15,4);
+  tile FENCE at (20,4);
+  tile FENCE at (15,5);
+  tile FENCE at (20,5);
+  tile FENCE at (15,6);
+  tile FENCE at (16,6);
+  tile FENCE at (18,6);
+  tile FENCE at (19,6);
+  tile FENCE at (20,6);
+
+  tile FLOWER at (5,3);
+  tile FLOWER at (8,3);
+  tile FLOWER at (5,4);
+  tile FLOWER at (8,4);
+  tile FLOWER at (16,4);
+  tile FLOWER at (19,4);
+  tile FLOWER at (16,5);
+  tile FLOWER at (19,5);
+
+  tile TREE at (0,0);
+  tile TREE at (1,1);
+  tile TREE at (2,0);
+  tile TREE at (3,1);
+  tile TREE at (11,0);
+  tile TREE at (13,1);
+  tile TREE at (22,0);
+  tile TREE at (23,1);
+  tile TREE at (0,5);
+  tile TREE at (1,6);
+  tile TREE at (2,7);
+  tile TREE at (22,2);
+  tile TREE at (23,3);
+  tile TREE at (10,5);
+  tile TREE at (14,7);
+
+  tile TREE at (0,12);
+  tile TREE at (1,13);
+  tile TREE at (2,14);
+  tile TREE at (3,15);
+  tile TREE at (0,16);
+  tile TREE at (5,17);
+  tile TREE at (7,16);
+  tile TREE at (20,14);
+  tile TREE at (21,15);
+  tile TREE at (22,16);
+  tile TREE at (23,14);
+  tile TREE at (19,16);
+  tile TREE at (9,15);
+
+  tile ROCK at (3,7);
+  tile ROCK at (11,3);
+  tile ROCK at (22,7);
+  tile ROCK at (4,11);
+  tile ROCK at (21,12);
+  tile ROCK at (10,16);
+
+  tile FLOWER at (9,7);
+  tile FLOWER at (13,5);
+  tile FLOWER at (21,8);
+  tile FLOWER at (3,10);
+  tile FLOWER at (8,12);
+  tile FLOWER at (18,11);
+  tile FLOWER at (15,14);
+  tile FLOWER at (6,15);
+  tile FLOWER at (11,13);
+
+  tile WATER at (15,12);
+  tile WATER at (16,12);
+  tile WATER at (17,12);
+  tile WATER at (18,12);
+  tile WATER at (14,13);
+  tile WATER at (15,13);
+  tile WATER at (16,13);
+  tile WATER at (17,13);
+  tile WATER at (18,13);
+  tile WATER at (14,14);
+  tile WATER at (15,14);
+  tile WATER at (16,14);
+  tile WATER at (17,14);
+  tile WATER at (18,14);
+  tile WATER at (15,15);
+  tile WATER at (16,15);
+  tile WATER at (17,15);
+
+  tile DIRT at (5,8);
+  tile DIRT at (7,8);
+  tile DIRT at (16,8);
+  tile DIRT at (18,8);
+  tile DIRT at (11,10);
+  tile DIRT at (13,10);
+  tile DIRT at (5,12);
+  tile DIRT at (20,11);
+
+  player at (12,9);
+}
