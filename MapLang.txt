@@ -1,0 +1,19 @@
+For MapLang V1 I propose:
+
+* One map per file
+* Map size definition
+* Tile placement
+* One player placement
+* Integer coordinates
+
+Example syntax:
+
+map MyLevel {
+size 20, 15;
+
+```
+tile GRASS at (1,2);
+player at (2,3);
+```
+
+}
