@@ -1,0 +1,53 @@
+// =====================================================
+// Castle Interior — throne room. Reached by stepping
+// through the Castle gate in kingdom.map. The south
+// door is a portal back; the kingdom remembers where
+// you stood, so you exit right at the gate.
+// =====================================================
+
+map CastleInterior {
+  size 15, 11;
+
+  // Stone floor for the hall
+  fill FLOOR_STONE from (1,1) to (13,9);
+
+  // Outer walls
+  row WALL_STONE from (0,0)  to (14,0);    // north
+  row WALL_STONE from (0,0)  to (0,10);    // west
+  row WALL_STONE from (14,0) to (14,10);   // east
+
+  // South wall — split around the south door at col 7
+  row WALL_STONE from (0,10) to (6,10);
+  row WALL_STONE from (8,10) to (14,10);
+  tile DOOR_STONE at (7,10);
+
+  // Stone windows decorate the north wall
+  tile WINDOW_STONE at (4,0);
+  tile WINDOW_STONE at (10,0);
+
+  // ─── The throne dais (parquet runner leading north) ───
+  row FLOOR_PARQUET from (7,3) to (7,9);
+
+  // Three banners hanging over the throne
+  tile BANNER_TEAL at (6,1);
+  tile BANNER_TEAL at (7,1);
+  tile BANNER_TEAL at (8,1);
+
+  // Torches lining the walls
+  tile TORCH at (1,2);
+  tile TORCH at (13,2);
+  tile TORCH at (1,5);
+  tile TORCH at (13,5);
+  tile TORCH at (1,8);
+  tile TORCH at (13,8);
+
+  // Two flower vases beside the throne
+  tile FLOWER at (5,2);
+  tile FLOWER at (9,2);
+
+  // Portal back out — `back` returns to whichever map you entered from.
+  portal at (7,10) -> back;
+
+  // Player spawns just inside the south door, facing north.
+  player at (7,9);
+}

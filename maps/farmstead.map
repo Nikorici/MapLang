@@ -1,0 +1,57 @@
+// =====================================================
+// FARMSTEAD — eastern region of Eldgate. Walk west off
+// the edge to return to the Kingdom. Buildings come from
+// the town library; the pasture, coop, and crop field
+// are featured parts.
+// =====================================================
+
+import "town.map";       // Cottage
+import "featured.map";   // ChickenCoop, CropField, Pasture
+
+map Farmstead {
+  size 28, 22;
+
+  neighbor west back;     // return to whichever map sent the player here
+
+  // ─── Stone road continuing from the kingdom ───
+  row STONE from (0,13) to (15,13);
+  row STONE from (0,14) to (15,14);
+
+  // ─── Farmer's cottage at the south end of the road ───
+  place Cottage at (5,15);
+
+  // ─── Pasture on the west ───
+  place Pasture at (1,3);
+
+  // ─── Crop field east of the road ───
+  place CropField at (17,4);
+  place CropField at (17,9);
+
+  // ─── Chicken coop near the cottage ───
+  place ChickenCoop at (17,15);
+
+  // ─── A small pond NW ───
+  fill WATER from (10,1) to (12,3);
+  tile ROCK     at (10,1);
+  tile MUSHROOM at (13,3);
+
+  // ─── Trees framing the corners ───
+  tile TREE_OAK  at (1,9);
+  tile TREE_PINE at (3,11);
+  tile TREE_OAK  at (25,1);
+  tile TREE_PINE at (27,4);
+  tile TREE_OAK  at (25,11);
+  tile TREE_PINE at (27,20);
+  tile TREE_OAK  at (1,21);
+
+  // ─── Wayside flora ───
+  tile FLOWER   at (15,2);
+  tile FLOWER   at (15,12);
+  tile MUSHROOM at (14,18);
+
+  // Signpost pointing west to the kingdom
+  tile SIGNPOST at (1,12);
+
+  // Player spawns on the road near the cottage
+  player at (8,13);
+}

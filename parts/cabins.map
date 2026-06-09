@@ -1,0 +1,123 @@
+// =====================================================
+// Showcase parts — bigger and more varied house shapes
+// than the basic 3x3 Cottage / 5x4 Inn in town.map.
+// Composed entirely from primitive roof/wall/window/door
+// tiles plus pond / plot / lamppost decorations.
+// =====================================================
+
+// 5x4 cabin: wide, red roof, two windows, porch row of
+// flowers and lamp posts in front of the door.
+part BigCabin {
+  size 5, 4;
+  // Roof (with chimney peak at center)
+  tile ROOF_RED       at (0,0);
+  tile ROOF_RED       at (1,0);
+  tile ROOF_RED_PEAK  at (2,0);
+  tile ROOF_RED       at (3,0);
+  tile ROOF_RED       at (4,0);
+  // Upper wall with two windows
+  tile WALL_WOOD   at (0,1);
+  tile WINDOW_WOOD at (1,1);
+  tile WALL_WOOD   at (2,1);
+  tile WINDOW_WOOD at (3,1);
+  tile WALL_WOOD   at (4,1);
+  // Lower wall — split around the centered door
+  tile WALL_WOOD at (0,2);
+  tile WALL_WOOD at (1,2);
+  tile DOOR_WOOD at (2,2);
+  tile WALL_WOOD at (3,2);
+  tile WALL_WOOD at (4,2);
+  // Porch — lamp posts flank the door, flowers between
+  tile TORCH  at (0,3);
+  tile FLOWER at (1,3);
+  tile PATH   at (2,3);
+  tile FLOWER at (3,3);
+  tile TORCH  at (4,3);
+}
+
+// 3x5 two-story narrow house with a grey peaked roof.
+part TallHouse {
+  size 3, 5;
+  tile ROOF_GREY      at (0,0);
+  tile ROOF_GREY_PEAK at (1,0);
+  tile ROOF_GREY      at (2,0);
+  // Upper floor
+  tile WALL_WOOD   at (0,1);
+  tile WINDOW_WOOD at (1,1);
+  tile WALL_WOOD   at (2,1);
+  // Mid-floor wall band
+  tile WALL_WOOD at (0,2);
+  tile WALL_WOOD at (1,2);
+  tile WALL_WOOD at (2,2);
+  // Lower floor window
+  tile WALL_WOOD   at (0,3);
+  tile WINDOW_WOOD at (1,3);
+  tile WALL_WOOD   at (2,3);
+  // Door row
+  tile WALL_WOOD at (0,4);
+  tile DOOR_WOOD at (1,4);
+  tile WALL_WOOD at (2,4);
+}
+
+// 3x3 small stone hut with grey roof.
+part Hut {
+  size 3, 3;
+  tile ROOF_GREY      at (0,0);
+  tile ROOF_GREY_PEAK at (1,0);
+  tile ROOF_GREY      at (2,0);
+  tile WALL_STONE   at (0,1);
+  tile WINDOW_STONE at (1,1);
+  tile WALL_STONE   at (2,1);
+  tile WALL_STONE at (0,2);
+  tile DOOR_STONE at (1,2);
+  tile WALL_STONE at (2,2);
+}
+
+// 4x3 pond — stone-ringed water with a mushroom on the bank.
+part Pond {
+  size 4, 3;
+  // Rock ring (top, sides, bottom)
+  tile ROCK at (0,0); tile ROCK at (1,0); tile ROCK at (2,0); tile ROCK at (3,0);
+  tile ROCK at (0,1);                                         tile ROCK at (3,1);
+  tile ROCK at (0,2); tile ROCK at (1,2); tile ROCK at (2,2); tile ROCK at (3,2);
+  // Water interior
+  tile WATER at (1,1);
+  tile WATER at (2,1);
+  // Bank decoration
+  tile MUSHROOM at (3,0);  // overlays NE rock with a mushroom on it
+}
+
+// 5x4 fenced garden plot with three crop rows and a south gate.
+part Plot {
+  size 5, 4;
+  fill DIRT from (0,0) to (4,3);
+  // Fence perimeter (with a south gate gap at col 2)
+  row FENCE from (0,0) to (4,0);              // north
+  tile FENCE at (0,1); tile FENCE at (4,1);   // sides row 1
+  tile FENCE at (0,2); tile FENCE at (4,2);   // sides row 2
+  tile FENCE at (0,3); tile FENCE at (1,3);   // south left
+  tile FENCE at (3,3); tile FENCE at (4,3);   // south right
+  // Crops
+  row CROP_STRAWBERRY from (1,1) to (3,1);
+  row CROP_LEEK       from (1,2) to (3,2);
+}
+
+// 1x1 lamppost — semantic alias for `tile TORCH`.
+part Lamppost {
+  size 1, 1;
+  tile TORCH at (0,0);
+}
+
+// Preview map so this library is playable on its own.
+map ShowcasePreview {
+  size 24, 14;
+  place BigCabin  at (1,1);
+  place TallHouse at (8,1);
+  place Hut       at (13,1);
+  place Pond      at (17,2);
+  place Plot      at (17,7);
+  place Lamppost  at (2,9);
+  place Lamppost  at (8,9);
+  place Lamppost  at (13,9);
+  player at (5,9);
+}

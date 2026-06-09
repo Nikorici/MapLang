@@ -1,0 +1,104 @@
+// =====================================================
+// Tiny Town building library.
+// Each building is composed from roof + wall + door pieces.
+// Read top-down: each row is one "level" of the structure.
+//
+// Open with --play to iterate; import from any map.
+// =====================================================
+
+// 3x3 cottage with red tile roof and stone walls.
+part Cottage {
+  size 3, 3;
+  // Roof
+  tile ROOF_RED      at (0,0);
+  tile ROOF_RED_PEAK at (1,0);
+  tile ROOF_RED      at (2,0);
+  // Upper wall + window
+  tile WALL_STONE   at (0,1);
+  tile WINDOW_STONE at (1,1);
+  tile WALL_STONE   at (2,1);
+  // Lower wall + door
+  tile WALL_STONE at (0,2);
+  tile DOOR_STONE at (1,2);
+  tile WALL_STONE at (2,2);
+}
+
+// 3x3 cottage with grey roof and wood walls.
+part WoodCottage {
+  size 3, 3;
+  tile ROOF_GREY      at (0,0);
+  tile ROOF_GREY_PEAK at (1,0);
+  tile ROOF_GREY      at (2,0);
+  tile WALL_WOOD   at (0,1);
+  tile WINDOW_WOOD at (1,1);
+  tile WALL_WOOD   at (2,1);
+  tile WALL_WOOD at (0,2);
+  tile DOOR_WOOD at (1,2);
+  tile WALL_WOOD at (2,2);
+}
+
+// 5x4 inn — wider, taller, stone with red tile roof.
+part Inn {
+  size 5, 4;
+  // Roof row
+  tile ROOF_RED      at (0,0);
+  tile ROOF_RED      at (1,0);
+  tile ROOF_RED_PEAK at (2,0);
+  tile ROOF_RED      at (3,0);
+  tile ROOF_RED      at (4,0);
+  // Upper floor — two windows
+  tile WALL_STONE   at (0,1);
+  tile WINDOW_STONE at (1,1);
+  tile WALL_STONE   at (2,1);
+  tile WINDOW_STONE at (3,1);
+  tile WALL_STONE   at (4,1);
+  // Mid-floor wall
+  tile WALL_STONE at (0,2);
+  tile WALL_STONE at (1,2);
+  tile WALL_STONE at (2,2);
+  tile WALL_STONE at (3,2);
+  tile WALL_STONE at (4,2);
+  // Ground floor — central door
+  tile WALL_STONE at (0,3);
+  tile WALL_STONE at (1,3);
+  tile DOOR_STONE at (2,3);
+  tile WALL_STONE at (3,3);
+  tile WALL_STONE at (4,3);
+}
+
+// 4x3 shop — wood building with extra-wide door.
+part Shop {
+  size 4, 3;
+  tile ROOF_GREY      at (0,0);
+  tile ROOF_GREY_PEAK at (1,0);
+  tile ROOF_GREY_PEAK at (2,0);
+  tile ROOF_GREY      at (3,0);
+  tile WALL_WOOD   at (0,1);
+  tile WINDOW_WOOD at (1,1);
+  tile WINDOW_WOOD at (2,1);
+  tile WALL_WOOD   at (3,1);
+  tile WALL_WOOD at (0,2);
+  tile DOOR_WOOD at (1,2);
+  tile DOOR_WOOD at (2,2);
+  tile WALL_WOOD at (3,2);
+}
+
+// 3x3 dirt garden with flowers and mushrooms.
+part Garden {
+  size 3, 3;
+  fill DIRT from (0,0) to (2,2);
+  tile FLOWER   at (0,0);
+  tile MUSHROOM at (1,1);
+  tile FLOWER   at (2,2);
+}
+
+// Preview so this file is playable standalone.
+map Preview {
+  size 20, 12;
+  place Cottage     at (1,1);
+  place WoodCottage at (5,1);
+  place Inn         at (10,1);
+  place Shop        at (1,8);
+  place Garden      at (16,8);
+  player at (9,10);
+}

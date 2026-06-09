@@ -1,0 +1,88 @@
+// =============================================
+// MapLang Showcase — demonstrates all features
+// =============================================
+
+map IslandAdventure {
+  size 20, 14;
+
+  // Ocean border (using fill!)
+  fill WATER from (0,0) to (19,0);
+  fill WATER from (0,13) to (19,13);
+  fill WATER from (0,1) to (0,12);
+  fill WATER from (19,1) to (19,12);
+
+  // Sandy beaches
+  row SAND from (1,1) to (18,1);
+  row SAND from (1,12) to (18,12);
+  row SAND from (1,1) to (1,12);
+  row SAND from (18,1) to (18,12);
+
+  // Fill island interior with grass so it's walkable
+  fill GRASS from (2,2) to (17,11);
+
+  // Lake in the middle
+  fill WATER from (8,5) to (11,7);
+
+  // Bridge across the lake!
+  tile BRIDGE at (9,5);
+  tile BRIDGE at (9,6);
+  tile BRIDGE at (9,7);
+
+  // Lava pit (danger zone!)
+  fill LAVA from (14,3) to (16,4);
+
+  // Dirt paths through the island
+  row PATH from (2,6) to (8,6);
+  row PATH from (12,6) to (17,6);
+  row PATH from (9,8) to (9,11);
+  row PATH from (5,3) to (5,9);
+  row PATH from (5,3) to (8,3);
+  tile PATH at (9,3);
+  tile PATH at (9,4);
+
+  // Connect path to target area
+  row PATH from (9,11) to (16,11);
+
+  // Forest (top-left)
+  tile TREE at (2,2);
+  tile TREE at (3,3);
+  tile TREE at (4,2);
+  tile TREE at (2,4);
+  tile TREE at (3,5);
+
+  // Forest (bottom-right)
+  tile TREE at (15,9);
+  tile TREE at (16,10);
+  tile TREE at (17,9);
+  tile TREE at (14,10);
+  tile TREE at (16,8);
+
+  // Houses — a little village
+  tile HOUSE at (13,2);
+  tile HOUSE at (15,6);
+
+  // Rocks scattered around
+  tile ROCK at (7,9);
+  tile ROCK at (3,10);
+  tile ROCK at (17,3);
+  tile ROCK at (12,10);
+
+  // Treasure chest at the end!
+  tile CHEST at (17,11);
+
+  // Fences around the village
+  tile FENCE at (12,3);
+  tile FENCE at (12,4);
+  tile FENCE at (12,5);
+
+  // Flowers for decoration
+  tile FLOWER at (6,4);
+  tile FLOWER at (8,2);
+  tile FLOWER at (11,9);
+  tile FLOWER at (4,11);
+  tile FLOWER at (14,8);
+  tile FLOWER at (6,8);
+
+  // Player starts at the beach
+  player at (2,6);
+}

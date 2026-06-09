@@ -30,6 +30,11 @@ public class TextureGenerator {
         save(rock(), "rock");
         save(house(), "house");
         save(player(), "player");
+        save(target(), "target");
+        save(sand(), "sand");
+        save(lava(), "lava");
+        save(bridge(), "bridge");
+        save(chest(), "chest");
 
         System.out.println("All textures generated in textures/");
     }
@@ -451,6 +456,172 @@ public class TextureGenerator {
         g.drawLine(22, 37, 27, 37);
         g.setColor(new Color(200, 235, 255));
         g.fillRect(23, 35, 2, 2);
+
+        g.dispose();
+        return img;
+    }
+
+    static BufferedImage sand() {
+        BufferedImage img = new BufferedImage(T, T, BufferedImage.TYPE_INT_ARGB);
+        noiseFill(img, 215, 195, 130, 12);
+        Graphics2D g = gfx(img);
+
+        // Sand ripples
+        g.setColor(new Color(195, 175, 110, 80));
+        for (int wy = 4; wy < T; wy += 6) {
+            int off = (wy / 6) % 2 == 0 ? 0 : 4;
+            for (int wx = off; wx < T; wx += 10)
+                g.fillOval(wx, wy, 8, 2);
+        }
+
+        // Small pebbles
+        g.setColor(new Color(180, 160, 100));
+        for (int i = 0; i < 4; i++)
+            g.fillRect(rng.nextInt(T - 2), rng.nextInt(T - 2), 2, 1);
+
+        g.dispose();
+        return img;
+    }
+
+    static BufferedImage lava() {
+        BufferedImage img = new BufferedImage(T, T, BufferedImage.TYPE_INT_ARGB);
+        noiseFill(img, 200, 60, 20, 18);
+        Graphics2D g = gfx(img);
+
+        // Bright lava veins
+        g.setColor(new Color(255, 160, 30, 180));
+        for (int i = 0; i < 5; i++) {
+            int x1 = rng.nextInt(T), y1 = rng.nextInt(T);
+            int x2 = x1 + rng.nextInt(12) - 6, y2 = y1 + rng.nextInt(12) - 6;
+            g.drawLine(x1, y1, x2, y2);
+        }
+
+        // Hot spots
+        g.setColor(new Color(255, 220, 60, 150));
+        for (int i = 0; i < 3; i++)
+            g.fillOval(rng.nextInt(T - 4), rng.nextInt(T - 4), 4, 3);
+
+        // Dark crust patches
+        g.setColor(new Color(80, 20, 10, 100));
+        for (int i = 0; i < 4; i++)
+            g.fillOval(rng.nextInt(T - 5), rng.nextInt(T - 5), 5, 4);
+
+        g.dispose();
+        return img;
+    }
+
+    static BufferedImage bridge() {
+        // Ground tile (32x32) — wooden planks over water-colored base
+        BufferedImage img = new BufferedImage(T, T, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = gfx(img);
+
+        // Water base visible at edges
+        g.setColor(new Color(40, 110, 180));
+        g.fillRect(0, 0, T, T);
+
+        // Wooden planks
+        Color wood = new Color(155, 110, 60);
+        Color woodDk = new Color(120, 80, 40);
+        Color woodLt = new Color(180, 135, 75);
+
+        for (int py = 0; py < T; py += 8) {
+            g.setColor(wood);
+            g.fillRect(3, py, 26, 7);
+            g.setColor(woodLt);
+            g.fillRect(3, py, 26, 2);
+            g.setColor(woodDk);
+            g.fillRect(3, py + 6, 26, 1);
+        }
+
+        // Side rails
+        g.setColor(woodDk);
+        g.fillRect(1, 0, 2, T);
+        g.fillRect(29, 0, 2, T);
+        g.setColor(woodLt);
+        g.fillRect(1, 0, 1, T);
+        g.fillRect(29, 0, 1, T);
+
+        g.dispose();
+        return img;
+    }
+
+    static BufferedImage chest() {
+        int h = 64;
+        BufferedImage img = new BufferedImage(T, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = gfx(img);
+
+        // Shadow
+        g.setColor(new Color(0, 0, 0, 40));
+        g.fillOval(4, 54, 24, 8);
+
+        // Chest body (front face)
+        g.setColor(new Color(140, 85, 35));
+        g.fillRect(4, 38, 24, 16);
+        // Side shading
+        g.setColor(new Color(110, 65, 25));
+        g.fillRect(22, 38, 6, 16);
+        // Highlight
+        g.setColor(new Color(170, 110, 50));
+        g.fillRect(4, 38, 6, 16);
+
+        // Lid (rounded top)
+        g.setColor(new Color(160, 100, 40));
+        g.fillRoundRect(3, 32, 26, 10, 6, 6);
+        g.setColor(new Color(185, 125, 55));
+        g.fillRoundRect(3, 32, 26, 5, 4, 4);
+
+        // Metal bands
+        g.setColor(new Color(180, 170, 50));
+        g.fillRect(5, 37, 22, 2);
+        g.fillRect(5, 46, 22, 2);
+
+        // Lock/clasp
+        g.setColor(new Color(210, 200, 60));
+        g.fillRect(13, 40, 6, 5);
+        g.setColor(new Color(240, 230, 80));
+        g.fillRect(14, 41, 4, 3);
+
+        // Keyhole
+        g.setColor(new Color(50, 30, 10));
+        g.fillRect(15, 42, 2, 2);
+
+        // Edge outlines
+        g.setColor(new Color(90, 55, 20));
+        g.drawRect(4, 38, 23, 15);
+        g.drawRoundRect(3, 32, 25, 9, 6, 6);
+
+        g.dispose();
+        return img;
+    }
+
+    static BufferedImage target() {
+        int h = 64;
+        BufferedImage img = new BufferedImage(T, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = gfx(img);
+
+        // Shadow
+        g.setColor(new Color(0, 0, 0, 45));
+        g.fillOval(7, 56, 18, 6);
+
+        // Pole
+        g.setColor(new Color(160, 160, 160));
+        g.fillRect(15, 6, 3, 52);
+        g.setColor(new Color(200, 200, 200));
+        g.fillRect(15, 6, 1, 52);
+
+        // Flag (triangular pennant, red)
+        g.setColor(new Color(220, 40, 40));
+        g.fillPolygon(new int[]{5, 15, 15}, new int[]{18, 8, 28}, 3);
+        // Flag highlight
+        g.setColor(new Color(255, 80, 60));
+        g.fillPolygon(new int[]{10, 15, 15}, new int[]{16, 10, 22}, 3);
+        // Flag outline
+        g.setColor(new Color(160, 20, 20));
+        g.drawPolygon(new int[]{5, 15, 15}, new int[]{18, 8, 28}, 3);
+
+        // Pole top ball
+        g.setColor(new Color(230, 210, 50));
+        g.fillOval(14, 3, 5, 5);
 
         g.dispose();
         return img;

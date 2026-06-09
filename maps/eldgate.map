@@ -1,0 +1,242 @@
+// =====================================================
+// ELDGATE — flagship showcase scene.
+//
+// Every MapLang feature exercised in one composed map:
+//   - imports (4 part libraries)
+//   - parts placed: Castle, BigCabin, TallHouse, Hut (x2),
+//     Inn, Fountain, Plot, Pond (x2), Lamppost (many)
+//   - repeat / random / fill / row / let / tile
+//   - neighbor west -> harbor.map, east -> farmstead.map
+//   - portals into castle and one cabin
+//   - animation everywhere (water, torches, chickens, cows)
+//
+// Style: forest clearing — dense tree perimeter, winding
+// sandy paths, no naked grass.
+// =====================================================
+
+import "buildings.map";   // Castle
+import "town.map";        // Inn
+import "featured.map";    // Fountain
+import "cabins.map";      // BigCabin, TallHouse, Hut, Pond, Plot, Lamppost
+
+map Eldgate {
+  let W = 44;
+  let H = 28;
+  size W, H;
+
+  neighbor west "harbor.map";
+  neighbor east "farmstead.map";
+
+  // ─── LAYER 1: Forest perimeter ─────────────────────
+  // Top + bottom edges (no neighbors to the north/south).
+  repeat i from 0 to 43 {
+    tile TREE_PINE at (i, 0);
+    tile TREE_OAK  at (i, 1);
+    tile TREE_PINE at (i, 26);
+    tile TREE_OAK  at (i, 27);
+  }
+  // Left + right edges, EXCEPT the two path rows (15-16)
+  // where the east-west road exits the map to neighbours.
+  repeat j from 2 to 14 {
+    tile TREE_PINE at (0, j);
+    tile TREE_OAK  at (1, j);
+    tile TREE_PINE at (42, j);
+    tile TREE_OAK  at (43, j);
+  }
+  repeat j from 17 to 25 {
+    tile TREE_PINE at (0, j);
+    tile TREE_OAK  at (1, j);
+    tile TREE_PINE at (42, j);
+    tile TREE_OAK  at (43, j);
+  }
+
+  // ─── LAYER 2: Wildflower / mushroom scatter ────────
+  // Drawn before everything else so buildings + paths cover
+  // any random tiles that landed on them.
+  random FLOWER   count 35 in (2, 2) to (41, 25);
+  random MUSHROOM count 20 in (2, 2) to (41, 25);
+
+  // ─── LAYER 3: The Castle dominates the north ───────
+  place Castle at (14, 2);   // gate at world (21,13), (22,13)
+
+  // ─── LAYER 4: Main east-west road (sandy PATH) ─────
+  row PATH from (0, 15) to (43, 15);
+  row PATH from (0, 16) to (43, 16);
+
+  // ─── LAYER 5: Vertical PATH from castle gate to south arch
+  row PATH from (21, 14) to (21, 25);
+  row PATH from (22, 14) to (22, 25);
+
+  // ─── LAYER 6: Sand plaza at the central crossroads ─
+  fill SAND from (19, 14) to (24, 17);
+
+  // ─── LAYER 7: Houses scattered around the village ──
+  place Hut       at (3, 5);     // NW forest hut
+  place BigCabin  at (4, 17);    // SW red-roof cabin (porch on row 20)
+  place TallHouse at (11, 17);   // narrow two-story
+  place Hut       at (32, 18);   // east-side stone hut
+  place Inn       at (36, 17);   // SE inn
+
+  // ─── LAYER 8: Decorative features ──────────────────
+  place Fountain at (16, 19);    // central plaza fountain
+  place Plot     at (25, 19);    // garden plot east of fountain
+  place Pond     at (3, 22);     // SW pond
+  place Pond     at (33, 22);    // SE pond
+
+  // ─── LAYER 9: Lampposts along the paths ────────────
+  place Lamppost at (9, 14);     // N of horiz path, NW area
+  place Lamppost at (32, 14);    // N of horiz path, NE area
+  place Lamppost at (9, 17);     // S of horiz path, SW area
+  place Lamppost at (35, 17);    // S of horiz path, SE area
+  place Lamppost at (20, 22);    // W of vertical path
+  place Lamppost at (23, 22);    // E of vertical path
+
+  // ─── LAYER 10: Signposts at intersections ──────────
+  tile SIGNPOST at (3, 16);      // pointing west to Harbor
+  tile SIGNPOST at (40, 16);     // pointing east to Farmstead
+  tile SIGNPOST at (18, 14);     // by castle gate (west side)
+  tile SIGNPOST at (25, 14);     // by castle gate (east side)
+  tile SIGNPOST at (24, 24);     // by south arch
+
+  // ─── LAYER 11: South gate (arch + banners) ─────────
+  tile ARCH_STONE   at (21, 25);
+  tile ARCH_STONE   at (22, 25);
+  tile BANNER_GREEN at (20, 25);
+  tile BANNER_GREEN at (23, 25);
+
+  // ─── LAYER 12: Banners flanking the castle gate approach ─
+  tile BANNER_TEAL at (19, 14);
+  tile BANNER_TEAL at (24, 14);
+
+  // ─── LAYER 13: Decorative solo trees and rocks ─────
+  tile TREE_OAK  at (3, 3);
+  tile TREE_PINE at (10, 4);
+  tile TREE_OAK  at (40, 4);
+  tile TREE_PINE at (40, 12);
+  tile TREE_OAK  at (3, 13);
+  tile TREE_PINE at (40, 13);
+  tile ROCK      at (3, 14);
+  tile ROCK      at (8, 23);
+  tile ROCK      at (36, 23);
+
+  // ─── LAYER 14: Portals into interiors ──────────────
+  // Castle gate (Castle's part-local PATH at (7,11),(8,11) → world (21,13),(22,13))
+  portal at (21, 13) -> "castle_interior.map";
+  portal at (22, 13) -> "castle_interior.map";
+  // BigCabin door is at part-local (2,2) → world (6, 19)
+  portal at (6, 19) -> "cottage_interior.map";
+
+  // ─── LAYER 16: Stone walkway cross around the fountain ─
+  // Fountain is at (16,19)..(18,21). Lay STONE tiles in a + pattern
+  // extending one cell each direction so the fountain reads as a plaza.
+  tile STONE at (15, 20);   // west arm
+  tile STONE at (19, 20);   // east arm
+  tile STONE at (17, 18);   // north arm
+  tile STONE at (17, 22);   // south arm
+
+  // ─── LAYER 17: Branch paths from main road to building doors ─
+  // To BigCabin (porch at world row 20). Go east around the house,
+  // south, then west to the porch.
+  tile PATH at (9, 17);
+  tile PATH at (9, 18);
+  tile PATH at (9, 19);
+  tile PATH at (9, 20);
+  tile PATH at (9, 21);
+  tile PATH at (8, 21);
+  tile PATH at (7, 21);
+  tile PATH at (6, 21);
+  tile PATH at (5, 21);
+  tile PATH at (4, 21);
+  // To TallHouse (door at world (12, 21)). Short stub south of the door.
+  tile PATH at (12, 22);
+  tile PATH at (12, 23);
+  // To east Hut (door at world (33, 20)). Detour east + south.
+  tile PATH at (34, 17);
+  tile PATH at (34, 18);
+  tile PATH at (34, 19);
+  tile PATH at (34, 20);
+  tile PATH at (34, 21);
+  tile PATH at (33, 21);
+  // To Inn (door at world (38, 20)). Detour east + south.
+  tile PATH at (41, 17);
+  tile PATH at (41, 18);
+  tile PATH at (41, 19);
+  tile PATH at (41, 20);
+  tile PATH at (41, 21);
+  tile PATH at (40, 21);
+  tile PATH at (39, 21);
+  tile PATH at (38, 21);
+  // To Plot gate (south gate at world (27, 22)). Connects to vertical path.
+  tile PATH at (27, 23);
+  tile PATH at (26, 23);
+  tile PATH at (25, 23);
+  tile PATH at (24, 23);
+  tile PATH at (23, 23);
+  // To NW Hut (door at world (4, 7)). Short stub south of the door.
+  tile PATH at (4, 8);
+  tile PATH at (4, 9);
+  tile PATH at (4, 10);
+  tile PATH at (4, 11);
+  tile PATH at (4, 12);
+  tile PATH at (4, 13);
+  tile PATH at (4, 14);
+  tile PATH at (3, 14);
+
+  // ─── LAYER 18: Additional lampposts along the paths ───
+  place Lamppost at (4, 14);    // wait — overlaps PATH at (4,14)? PATH is ground, lamppost is TORCH (object). Object draws over ground. OK.
+  place Lamppost at (14, 14);
+  place Lamppost at (28, 14);
+  place Lamppost at (39, 14);
+  place Lamppost at (3, 17);
+  place Lamppost at (14, 17);
+  place Lamppost at (28, 17);
+  place Lamppost at (35, 17);
+  // Pair flanking the south arch
+  place Lamppost at (19, 24);
+  place Lamppost at (24, 23);
+
+  // ─── LAYER 19: Flower beds around buildings ──────
+  // NW Hut surround
+  tile FLOWER at (2, 4);
+  tile FLOWER at (7, 4);
+  tile FLOWER at (2, 8);
+  tile FLOWER at (7, 8);
+  // Around BigCabin porch
+  tile FLOWER at (3, 20);
+  tile FLOWER at (9, 22);
+  // Beside TallHouse
+  tile FLOWER at (10, 21);
+  tile FLOWER at (14, 21);
+  // Around east Hut
+  tile FLOWER at (31, 20);
+  tile FLOWER at (35, 20);
+  // Around Inn
+  tile FLOWER at (35, 22);
+  // Beside fountain plaza
+  tile FLOWER at (14, 20);
+  tile FLOWER at (20, 20);
+
+  // ─── LAYER 20: Mushroom clusters near the forest ───
+  tile MUSHROOM at (3, 12);
+  tile MUSHROOM at (40, 22);
+  tile MUSHROOM at (3, 23);
+  tile MUSHROOM at (40, 23);
+  tile MUSHROOM at (5, 15);     // path-side cluster (under path? path covers)
+  tile MUSHROOM at (38, 15);
+
+  // ─── LAYER 21: Extra solo trees ───
+  tile TREE_OAK  at (10, 11);
+  tile TREE_PINE at (33, 5);
+  tile TREE_PINE at (5, 12);
+  tile TREE_OAK  at (40, 8);
+  tile TREE_PINE at (10, 13);
+  tile TREE_OAK  at (33, 13);
+
+  // ─── LAYER 22: Extra signposts at house approach forks ─
+  tile SIGNPOST at (9, 16);     // pointing to BigCabin
+  tile SIGNPOST at (34, 16);    // pointing to east Hut
+  tile SIGNPOST at (41, 16);    // pointing to Inn
+
+  // ─── LAYER 23: Player spawn at the south arch ──────
+  player at (21, 24);
+}

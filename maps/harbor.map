@@ -1,0 +1,62 @@
+// =====================================================
+// HARBOR — coastal region. Walk east off the edge to
+// return to the Kingdom. The lighthouse is built from
+// a featured part; the pier is laid out by hand.
+// =====================================================
+
+import "town.map";       // Cottage
+import "featured.map";   // Lighthouse
+
+map Harbor {
+  size 28, 22;
+
+  neighbor east back;     // return to whichever map sent the player here
+
+  // ─── The sea (animated) ───
+  fill WATER from (0,0) to (7,21);
+
+  // ─── Sandy beach ───
+  fill SAND from (8,0) to (10,21);
+
+  // ─── Lighthouse on the beach ───
+  place Lighthouse at (8,4);
+
+  // ─── Wooden pier extending from the beach southward ───
+  tile WOOD at (8,12);
+  tile WOOD at (9,12);
+  tile WOOD at (10,12);
+  tile WOOD at (8,13);
+  tile WOOD at (9,13);
+  tile WOOD at (10,13);
+  tile WOOD at (8,14);
+  tile WOOD at (9,14);
+
+  // Pier lamps
+  tile TORCH at (8,11);
+  tile TORCH at (10,11);
+
+  // ─── Stone-paved road heading east to the kingdom ───
+  row STONE from (11,13) to (27,13);
+  row STONE from (11,14) to (27,14);
+
+  // ─── A coastal cottage on the bluff ───
+  place Cottage at (15,16);
+
+  // ─── Trees and decoration ───
+  tile TREE_PINE at (12,1);
+  tile TREE_OAK  at (16,3);
+  tile TREE_PINE at (20,2);
+  tile TREE_OAK  at (24,4);
+  tile TREE_PINE at (26,1);
+  tile TREE_OAK  at (12,19);
+  tile TREE_PINE at (24,20);
+  tile FLOWER    at (14,9);
+  tile FLOWER    at (22,9);
+  tile MUSHROOM  at (18,18);
+
+  // Signpost pointing east
+  tile SIGNPOST at (26,12);
+
+  // Player spawns on the pier
+  player at (9,13);
+}

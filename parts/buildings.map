@@ -1,0 +1,141 @@
+// =====================================================
+// Reusable buildings. BRICK is a wall (blocks movement);
+// STONE and WOOD are floors. Doorways are real gaps in
+// the brick — not just path tiles layered over it.
+// =====================================================
+
+// A 16x12 fortified castle — throne dais, walkway, banners,
+// corner torches, water features, and outer-corner trees.
+part Castle {
+  size 16, 12;
+
+  // ── Stone-paved courtyard ──────────────────────────
+  fill STONE from (1,1) to (14,10);
+
+  // ── Outer walls ────────────────────────────────────
+  row BRICK from (0,0)  to (15,0);    // north
+  row BRICK from (0,0)  to (0,11);    // west
+  row BRICK from (15,0) to (15,11);   // east
+  row brick from (1,1) to (3,3);      // (kept marker)
+  row BRICK from (0,11) to (6,11);    // south wall L
+  row BRICK from (9,11) to (15,11);   // south wall R (gate gap cols 7-8)
+
+  // ── Gate ───────────────────────────────────────────
+  tile PATH at (7,11);
+  tile PATH at (8,11);
+  tile TORCH at (6,11);               // gate torches
+  tile TORCH at (9,11);
+
+  // ── Throne walkway (wood) leading from gate to dais ─
+  fill WOOD from (7,4) to (8,10);
+
+  // ── Throne dais (wider wood platform) ──────────────
+  fill WOOD from (5,3) to (10,7);
+
+  // ── Throne banners (three colours behind & flanking) ─
+  tile BANNER_GREEN at (7,3);          // central crown banner
+  tile BANNER_GREEN at (8,3);
+  tile BANNER_TEAL  at (5,3);          // flanks
+  tile BANNER_TEAL  at (10,3);
+  tile BANNER       at (3,3);          // outer accent banners
+  tile BANNER       at (12,3);
+
+  // ── Orange banners flanking the gate (inside) ──────
+  tile BANNER at (5,10);
+  tile BANNER at (10,10);
+
+  // ── Corner torches inside the courtyard ────────────
+  tile TORCH at (1,10);                // SW interior corner
+  tile TORCH at (14,10);               // SE interior corner
+  tile TORCH at (1,5);                 // west wall midway
+  tile TORCH at (14,5);                // east wall midway
+
+  // ── Decorative water features in the courtyard ─────
+  // (small wells: rock north, water south)
+  tile ROCK  at (4,5);   tile WATER at (4,6);
+  tile ROCK  at (11,5);  tile WATER at (11,6);
+
+  // ── Flower beds along the inner walls ──────────────
+  tile FLOWER at (2,8);
+  tile FLOWER at (13,8);
+  tile FLOWER at (2,2);
+  tile FLOWER at (13,2);
+
+  // ── Trees at the outer corners — break the rectangular
+  //    silhouette by extending visually above the wall.
+  tile TREE_OAK at (1,1);
+  tile TREE_OAK at (14,1);
+  tile TREE_OAK at (2,1);
+  tile TREE_OAK at (13,1);
+}
+
+// A 4x5 watchtower with a north-facing gate.
+part Watchtower {
+  size 4, 5;
+
+  // Floor
+  fill STONE from (1,1) to (2,3);
+
+  // North wall — split around the door at col 1-2
+  tile BRICK at (0,0);
+  tile BRICK at (3,0);
+
+  // Side and south walls
+  tile BRICK at (0,1);
+  tile BRICK at (0,2);
+  tile BRICK at (0,3);
+  tile BRICK at (3,1);
+  tile BRICK at (3,2);
+  tile BRICK at (3,3);
+  row BRICK from (0,4) to (3,4);
+
+  // North-facing door
+  tile PATH at (1,0);
+  tile PATH at (2,0);
+
+  // Interior torch
+  tile TORCH at (2,2);
+
+  // Banner on the south face
+  tile BANNER_GREEN at (1,4);
+}
+
+// A 6x5 cottage with a south-facing gate.
+part Cottage {
+  size 6, 5;
+
+  // North and side walls (solid)
+  row BRICK from (0,0) to (5,0);
+  row BRICK from (0,0) to (0,4);
+  row BRICK from (5,0) to (5,4);
+
+  // South wall — split around the door at cols 2-3
+  tile BRICK at (0,4);
+  tile BRICK at (1,4);
+  tile BRICK at (4,4);
+  tile BRICK at (5,4);
+
+  // Wood plank floor
+  fill WOOD from (1,1) to (4,3);
+
+  // South-facing door
+  tile PATH at (2,4);
+  tile PATH at (3,4);
+
+  // Flanking torches (block, that's fine — they're on the wall)
+  tile TORCH at (1,4);
+  tile TORCH at (4,4);
+
+  // Interior detail
+  tile FLOWER at (1,1);
+  tile FLOWER at (4,3);
+}
+
+// Preview so this file is playable standalone.
+map Preview {
+  size 26, 16;
+  place Castle      at (1,1);
+  place Watchtower  at (19,3);
+  place Cottage     at (19,10);
+  player at (8,13);
+}

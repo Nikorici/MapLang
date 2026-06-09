@@ -1,0 +1,100 @@
+// =====================================================
+// PIXEL VILLAGE — recreated from the reference image
+// (image.png). Uses the new pixel-asset pack:
+//   - multi-cell house sprites (blue, red, small blue)
+//   - 3x3 stone-bordered pond from the autotile sheet
+//   - bigger tree sprites, bushes, benches, signs
+//
+// Forest border, winding sandy path, three houses, a
+// pond in the SE corner, garden plot in the SW.
+// =====================================================
+
+import "cabins.map";      // Lamppost
+import "pixel.map";       // HouseBlue / HouseRed / HouseSmallBlue / PondBig / BushTile / BenchTile / TallOak / TallPine
+
+map PixelVillage {
+  size 30, 20;
+
+  // ─── Dense forest perimeter ───────────────────────
+  repeat i from 0 to 29 {
+    tile TREE_PINE at (i, 0);
+    tile TREE_OAK  at (i, 1);
+    tile TREE_PINE at (i, 18);
+    tile TREE_OAK  at (i, 19);
+  }
+  repeat j from 2 to 17 {
+    tile TREE_PINE at (0, j);
+    tile TREE_OAK  at (1, j);
+    tile TREE_PINE at (28, j);
+    tile TREE_OAK  at (29, j);
+  }
+
+  // ─── Wildflower / mushroom scatter (under everything else) ─
+  random FLOWER   count 28 in (2, 2) to (27, 17);
+  random MUSHROOM count 14 in (2, 2) to (27, 17);
+
+  // ─── Horizontal sandy main street ──────────────────
+  row PATH from (2, 7) to (27, 7);
+  row PATH from (2, 8) to (27, 8);
+
+  // ─── Vertical south branch ─────────────────────────
+  row PATH from (14, 9) to (14, 17);
+  row PATH from (15, 9) to (15, 17);
+
+  // ─── Houses (pixel-asset sprites) ──────────────────
+  place HouseBlue       at (3,  2);   // NW big blue cabin
+  place HouseRed        at (18, 2);   // NE big red building
+  place HouseSmallBlue  at (11, 10);  // center-south cottage
+
+  // ─── Pond at the SE corner ─────────────────────────
+  place PondBig at (23, 13);
+
+  // ─── SW garden plot — dirt patch with crops ───────
+  fill DIRT from (3, 12) to (6, 14);
+  tile CROP_STRAWBERRY at (3, 12);
+  tile CROP_STRAWBERRY at (5, 12);
+  tile CROP_LEEK       at (3, 13);
+  tile CROP_LEEK       at (5, 13);
+  tile CROP_POTATO     at (3, 14);
+  tile CROP_POTATO     at (5, 14);
+
+  // ─── Decorative big trees inside the village ──────
+  place TallOak  at (8,  3);
+  place TallPine at (15, 2);
+  place TallOak  at (24, 11);
+  place TallPine at (10, 16);
+
+  // ─── Bushes filling between houses and paths ──────
+  place BushTile at (8,  11);
+  place BushTile at (12, 16);
+  place BushTile at (18, 11);
+  place BushTile at (20, 16);
+  place BushTile at (3,  16);
+  place BushTile at (25, 17);
+
+  // ─── Benches by the main street ───────────────────
+  place BenchTile at (10, 9);
+  place BenchTile at (20, 9);
+
+  // ─── Signs at the road forks ──────────────────────
+  tile SIGN_WOODEN at (3,  6);    // by HouseBlue
+  tile SIGN_FLOWER at (22, 6);    // by HouseRed
+  tile SIGN_SMALL  at (16, 16);   // by south path
+
+  // ─── Lampposts along the paths (off the path itself) ─
+  place Lamppost at (7,  6);
+  place Lamppost at (17, 6);
+  place Lamppost at (7,  9);
+  place Lamppost at (24, 9);
+  place Lamppost at (13, 12);
+  place Lamppost at (16, 12);
+  place Lamppost at (13, 16);
+  place Lamppost at (16, 16);
+
+  // ─── A small rock cluster near the pond ───────────
+  tile ROCK at (26, 16);
+  tile ROCK at (22, 16);
+
+  // Player spawns at the south end of the vertical path
+  player at (14, 17);
+}

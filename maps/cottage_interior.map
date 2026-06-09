@@ -1,0 +1,43 @@
+// =====================================================
+// Cottage Interior — what you see when you step through
+// a Cottage door in tinyvillage.map.
+//
+// Walls use Tiny Town wall pieces; floor uses the Modern
+// Interiors parquet pattern. The south door at (4,7) is
+// a portal back to the village.
+// =====================================================
+
+map CottageInterior {
+  size 9, 8;
+
+  // Wood-plank parquet floor for the room body
+  fill FLOOR_PARQUET from (1,1) to (7,6);
+
+  // Walls (stone) around the room
+  row WALL_STONE from (0,0) to (8,0);    // north
+  row WALL_STONE from (0,0) to (0,7);    // west
+  row WALL_STONE from (8,0) to (8,7);    // east
+
+  // South wall — split around the door at col 4 (door must be a REAL gap,
+  // not a tile layered over a wall, or the player can't walk through it).
+  row WALL_STONE from (0,7) to (3,7);
+  row WALL_STONE from (5,7) to (8,7);
+  tile DOOR_WOOD   at (4,7);
+  // Windows are still walls (you can't walk through a window) — these can
+  // safely sit on top of WALL_STONE in the row.
+  tile WINDOW_WOOD at (2,7);
+  tile WINDOW_WOOD at (6,7);
+
+  // A little furniture-ish decoration: torches on inside walls
+  tile TORCH at (1,1);
+  tile TORCH at (7,1);
+
+  // Flowers as a "rug"
+  tile FLOWER at (4,4);
+
+  // Portal back out — `back` returns to whichever map you entered from.
+  portal at (4,7) -> back;
+
+  // Player spawns in front of the door looking out
+  player at (4,6);
+}

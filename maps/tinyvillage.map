@@ -1,0 +1,80 @@
+// =====================================================
+// Tiny Village — a deliberately composed scene built from
+// the Tiny Town building library. Houses are themselves
+// composed from roof + wall + window + door parts.
+// =====================================================
+
+import "town.map";
+
+map TinyVillage {
+  size 32, 22;
+
+  // ─── Stone-paved main street running north-south through center ───
+  row STONE from (15,0) to (15,21);
+  row STONE from (16,0) to (16,21);
+
+  // ─── Grand stone archways at both ends of the road ───
+  tile ARCH_STONE at (15,0);
+  tile ARCH_STONE at (16,0);
+  tile ARCH_STONE at (15,21);
+  tile ARCH_STONE at (16,21);
+
+  // ─── West side: row of cottages with stone path to street ───
+  place Cottage at (8,3);    // red roof — its door is a portal (see below)
+  place WoodCottage at (8,9); // grey roof
+  place Cottage at (8,15);
+
+  // Stepping on the first cottage's stone door enters the interior scene.
+  // Walking back out through its south door returns to the village.
+  portal at (9,5) -> "cottage_interior.map";
+
+  // Short connector paths from cottage doors to main street
+  tile STONE at (12,5);     tile STONE at (13,5);     tile STONE at (14,5);
+  tile STONE at (12,11);    tile STONE at (13,11);    tile STONE at (14,11);
+  tile STONE at (12,17);    tile STONE at (13,17);    tile STONE at (14,17);
+
+  // ─── East side: the Inn (focal point) and a Shop ───
+  place Inn  at (19,3);     // big stone/red building
+  place Shop at (20,12);    // smaller wood shop
+
+  tile STONE at (17,7);     tile STONE at (18,7);     // connector to Inn door
+  tile STONE at (17,15);    tile STONE at (18,15);    // connector to Shop
+
+  // ─── Decorative gardens ───
+  place Garden at (4,8);
+  place Garden at (25,17);
+
+  // ─── Signposts at the entrances ───
+  tile SIGNPOST at (14,1);
+  tile SIGNPOST at (17,20);
+
+  // ─── A small pond on the south-west ───
+  fill WATER from (1,17) to (3,20);
+  tile ROCK at (1,17);
+  tile MUSHROOM at (4,19);
+
+  // ─── Tree perimeter — clusters, not scatter ───
+  // North-west grove
+  tile TREE_PINE at (1,1);
+  tile TREE_OAK  at (3,2);
+  tile TREE_PINE at (1,4);
+  // North-east grove
+  tile TREE_OAK  at (28,1);
+  tile TREE_PINE at (30,3);
+  tile TREE_OAK  at (28,5);
+  // South-east grove
+  tile TREE_PINE at (29,14);
+  tile TREE_OAK  at (30,17);
+  tile TREE_PINE at (28,20);
+  // South-west tree
+  tile TREE_OAK  at (6,19);
+
+  // ─── Light decoration ───
+  tile FLOWER   at (12,8);
+  tile FLOWER   at (20,10);
+  tile MUSHROOM at (5,15);
+  tile MUSHROOM at (27,8);
+
+  // Player spawns just inside the south gate.
+  player at (15,20);
+}

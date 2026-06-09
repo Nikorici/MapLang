@@ -1,5 +1,16 @@
 # Compiled class files
 *.class
 commands.txt
-# Output renders
-output/*.png
+# Output renders (PNG + legacy pathfinding GIFs)
+output/
+
+# Third-party asset packs (downloaded locally, not redistributed)
+assets/
+
+# Staging directory used by the texture extractor
+textures/_unpacked/
+textures/files.zip
+
+# Reference images pasted into the repo root (not part of the project)
+image.png
+*.jpg

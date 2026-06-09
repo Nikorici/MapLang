@@ -1,0 +1,37 @@
+// =====================================================
+// Forest — east of the village.
+// Edges:  west -> village.map    (walk off the left)
+// =====================================================
+
+part Grove {
+  size 4, 4;
+  tile TREE at (0,0);
+  tile TREE at (2,1);
+  tile TREE at (1,3);
+  tile ROCK at (3,3);
+}
+
+map DarkForest {
+  size 20, 14;
+
+  neighbor west "village.map";
+
+  // Path continuing from the village's east edge
+  row PATH from (0,7) to (8,7);
+
+  // Trees thicken further east
+  place Grove at (10,2);
+  place Grove at (14,4);
+  place Grove at (10,8);
+  place Grove at (15,10);
+
+  // Lone clearing with flowers and a pond
+  tile FLOWER at (5,3);
+  tile FLOWER at (4,4);
+  tile FLOWER at (6,3);
+  fill WATER from (3,10) to (5,12);
+  tile ROCK at (3,10);
+
+  // Torch at the threshold so the player can see where they came from
+  tile TORCH at (1,7);
+}

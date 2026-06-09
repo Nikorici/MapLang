@@ -1,0 +1,85 @@
+// =====================================================
+// Pixel-asset houses, pond, and decorations.
+// The houses use multi-cell PNG sprites (96x128, 128x128,
+// 64x64). The sprite is anchored at its BOTTOM-LEFT cell;
+// ROOF_GREY tiles (invisible under the sprite — they are
+// ground tiles drawn before the object pass) act as
+// blockers for the rest of the sprite's footprint.
+// =====================================================
+
+// 3-wide × 4-tall blue-roof tall house. Sprite anchored at (0,3).
+part HouseBlue {
+  size 3, 5;
+  // Invisible blockers covering the sprite footprint
+  tile ROOF_GREY at (0,0); tile ROOF_GREY at (1,0); tile ROOF_GREY at (2,0);
+  tile ROOF_GREY at (0,1); tile ROOF_GREY at (1,1); tile ROOF_GREY at (2,1);
+  tile ROOF_GREY at (0,2); tile ROOF_GREY at (1,2); tile ROOF_GREY at (2,2);
+  tile ROOF_GREY at (1,3); tile ROOF_GREY at (2,3);
+  // The visible sprite (anchored bottom-left of footprint)
+  tile HOUSE_BLUE at (0,3);
+  // Entrance row
+  tile PATH at (0,4); tile PATH at (1,4); tile PATH at (2,4);
+}
+
+// 3-wide × 4-tall orange-roof house.
+part HouseOrange {
+  size 3, 5;
+  tile ROOF_GREY at (0,0); tile ROOF_GREY at (1,0); tile ROOF_GREY at (2,0);
+  tile ROOF_GREY at (0,1); tile ROOF_GREY at (1,1); tile ROOF_GREY at (2,1);
+  tile ROOF_GREY at (0,2); tile ROOF_GREY at (1,2); tile ROOF_GREY at (2,2);
+  tile ROOF_GREY at (1,3); tile ROOF_GREY at (2,3);
+  tile HOUSE_ORANGE at (0,3);
+  tile PATH at (0,4); tile PATH at (1,4); tile PATH at (2,4);
+}
+
+// 4-wide × 4-tall red-roof big building (an inn).
+part HouseRed {
+  size 4, 5;
+  tile ROOF_GREY at (0,0); tile ROOF_GREY at (1,0); tile ROOF_GREY at (2,0); tile ROOF_GREY at (3,0);
+  tile ROOF_GREY at (0,1); tile ROOF_GREY at (1,1); tile ROOF_GREY at (2,1); tile ROOF_GREY at (3,1);
+  tile ROOF_GREY at (0,2); tile ROOF_GREY at (1,2); tile ROOF_GREY at (2,2); tile ROOF_GREY at (3,2);
+  tile ROOF_GREY at (1,3); tile ROOF_GREY at (2,3); tile ROOF_GREY at (3,3);
+  tile HOUSE_RED at (0,3);
+  tile PATH at (0,4); tile PATH at (1,4); tile PATH at (2,4); tile PATH at (3,4);
+}
+
+// 2-wide × 2-tall small blue house.
+part HouseSmallBlue {
+  size 2, 3;
+  tile ROOF_GREY at (0,0); tile ROOF_GREY at (1,0);
+  tile ROOF_GREY at (1,1);
+  tile HOUSE_SMALL_BLUE at (0,1);
+  tile PATH at (0,2); tile PATH at (1,2);
+}
+
+// 3x3 stone-bordered pond using the 9-piece autotile set.
+part PondBig {
+  size 3, 3;
+  tile POND_NW at (0,0); tile POND_N at (1,0); tile POND_NE at (2,0);
+  tile POND_W  at (0,1); tile POND_C at (1,1); tile POND_E  at (2,1);
+  tile POND_SW at (0,2); tile POND_S at (1,2); tile POND_SE at (2,2);
+}
+
+// Decorative single-tile parts (semantic aliases).
+part BushTile     { size 1, 1; tile BUSH        at (0,0); }
+part BenchTile    { size 2, 1; tile BENCH       at (0,0); }
+part TallOak      { size 2, 3; tile TREE_OAK_BIG  at (0,2); }
+part TallPine     { size 1, 3; tile TREE_PINE_BIG at (0,2); }
+
+// Preview map so this library is playable on its own.
+map PixelPreview {
+  size 24, 14;
+  place HouseBlue       at (1,1);
+  place HouseOrange     at (5,1);
+  place HouseRed        at (9,1);
+  place HouseSmallBlue  at (14,2);
+  place PondBig         at (17,1);
+  place TallOak         at (1,10);
+  place TallPine        at (4,10);
+  place BushTile        at (7,11);
+  place BenchTile       at (9,11);
+  tile  SIGN_SMALL  at (12,11);
+  tile  SIGN_WOODEN at (14,11);
+  tile  SIGN_FLOWER at (16,11);
+  player at (20,12);
+}
