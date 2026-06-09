@@ -1,0 +1,250 @@
+// =====================================================
+// RIVERVALE — a riverside market village.
+//
+// A river runs north-south down the middle of the map and
+// flows off both edges. A single stone bridge carries the
+// east-west road across it. The two banks have distinct
+// characters:
+//
+//   WEST BANK  — the town: a fountain plaza ringed in
+//                stone, two market stalls, an inn and a
+//                blue cottage to the north, a shop, a
+//                wood cottage and a flower garden to the
+//                south.
+//   EAST BANK  — the farmland: a fenced cow pasture, a
+//                chicken coop, an orchard of tall trees,
+//                crop rows, a fenced garden plot, a
+//                stone-ringed pond and two cottages.
+//
+// Features exercised: imports (4 libraries), parts placed
+// (Fountain, MarketStall, Inn, Shop, WoodCottage, Garden,
+// Pasture, ChickenCoop, CropField, Plot, PondBig, Hut,
+// pixel house sprites, big trees, benches, bushes,
+// lampposts), repeat / random / fill / row / let / tile,
+// two neighbors (west->harbor, east->farmstead) reached
+// along the road, two portals into a cottage interior,
+// and animated water flanking the bridge.
+//
+// The clean trick: WATER blocks movement, so the river is
+// filled in two halves with a gap at rows 13-14, and the
+// BRIDGE deck is laid in that gap — a real, crossable span.
+// =====================================================
+
+import "featured.map";   // Fountain, MarketStall, Pasture, ChickenCoop, CropField
+import "town.map";        // Inn, Shop, WoodCottage, Garden
+import "cabins.map";      // Hut, Plot, Lamppost
+import "pixel.map";       // HouseRed, HouseBlue, HouseOrange, PondBig, BushTile, BenchTile, TallOak, TallPine
+
+map Rivervale {
+  let W = 42;
+  let H = 28;
+  size W, H;
+
+  // The road exits both side edges at rows 13-14 into the neighbours.
+  neighbor west "harbor.map";
+  neighbor east "farmstead.map";
+
+  // ─── LAYER 1: The river ────────────────────────────
+  // Cols 19-22 are water; banks at cols 18 and 23 are sand.
+  // Filled in two halves leaving a gap at rows 13-14 so the
+  // bridge deck there is walkable (water would block).
+  fill WATER from (19, 0)  to (22, 12);
+  fill WATER from (19, 15) to (22, 27);
+  fill SAND  from (18, 0)  to (18, 27);   // west bank shoreline
+  fill SAND  from (23, 0)  to (23, 27);   // east bank shoreline
+
+  // ─── LAYER 2: Wildflower / mushroom scatter ────────
+  // Drawn first so paths and buildings cover any that land
+  // on them; the leftovers freckle the open grass.
+  random FLOWER   count 30 in (2, 2) to (16, 25);
+  random MUSHROOM count 14 in (2, 2) to (16, 25);
+  random FLOWER   count 24 in (25, 2) to (39, 25);
+  random MUSHROOM count 16 in (25, 2) to (39, 25);
+
+  // ─── LAYER 3: Forest perimeter ─────────────────────
+  // Top + bottom bands, split around the river mouth (18-23)
+  // so the water reads as flowing off the map edge.
+  repeat i from 0 to 17 {
+    tile TREE_PINE at (i, 0);
+    tile TREE_OAK  at (i, 1);
+    tile TREE_PINE at (i, 26);
+    tile TREE_OAK  at (i, 27);
+  }
+  repeat i from 24 to 41 {
+    tile TREE_PINE at (i, 0);
+    tile TREE_OAK  at (i, 1);
+    tile TREE_PINE at (i, 26);
+    tile TREE_OAK  at (i, 27);
+  }
+  // Left + right bands, split around the road rows (13-14)
+  // so the east-west road can leave the map to the neighbours.
+  repeat j from 2 to 12 {
+    tile TREE_PINE at (0, j);
+    tile TREE_OAK  at (1, j);
+    tile TREE_OAK  at (40, j);
+    tile TREE_PINE at (41, j);
+  }
+  repeat j from 15 to 25 {
+    tile TREE_PINE at (0, j);
+    tile TREE_OAK  at (1, j);
+    tile TREE_OAK  at (40, j);
+    tile TREE_PINE at (41, j);
+  }
+
+  // ─── LAYER 4: The main east-west road ──────────────
+  row PATH from (0, 13) to (41, 13);
+  row PATH from (0, 14) to (41, 14);
+
+  // ─── LAYER 5: The stone bridge over the river ──────
+  // Laid last over the road so the deck shows; spans both
+  // banks (cols 18-23) at the road rows.
+  fill BRIDGE from (18, 13) to (23, 14);
+
+  // =====================================================
+  // WEST BANK — the town (cols 2-17)
+  // =====================================================
+
+  // ─── LAYER 6: Fountain plaza, paved in stone ───────
+  fill STONE from (6, 8) to (12, 12);
+  place Fountain at (8, 9);            // 3x3, water + corner rocks
+  place BenchTile at (6, 12);          // benches facing the fountain
+  place BenchTile at (11, 12);
+
+  // ─── LAYER 7: Two market stalls flanking the plaza ─
+  place MarketStall at (3, 9);         // west of the plaza
+  place MarketStall at (13, 9);        // east of the plaza
+
+  // ─── LAYER 8: North row — inn and blue cottage ─────
+  place HouseRed  at (3, 2);           // the inn (red roof), door-path row 6
+  place HouseBlue at (12, 2);          // blue cottage, door-path row 6
+  place TallPine  at (9, 4);           // a tall pine between them
+
+  // ─── LAYER 9: South row — shop, cottage, garden ────
+  place Shop        at (3, 18);
+  place WoodCottage at (9, 18);
+  place Garden      at (13, 18);
+
+  // ─── LAYER 10: Lampposts lining the town side ──────
+  place Lamppost at (5, 7);            // by the inn
+  place Lamppost at (14, 7);           // by the blue cottage
+  place Lamppost at (5, 16);           // by the shop
+  place Lamppost at (11, 16);          // by the garden (beside the lane)
+  place Lamppost at (17, 12);          // west bridgehead, north
+  place Lamppost at (17, 15);          // west bridgehead, south
+
+  // =====================================================
+  // EAST BANK — the farmland (cols 24-39)
+  // =====================================================
+
+  // ─── LAYER 11: Pasture and chicken coop in the north ─
+  place Pasture     at (25, 3);        // 6x5 fenced cows
+  place ChickenCoop at (33, 3);        // 5x4 fenced chickens
+
+  // ─── LAYER 12: Cottages on the east bank ───────────
+  place Hut         at (25, 10);       // stone hut, door row 12
+  place HouseOrange at (34, 8);        // orange cottage, door-path row 12
+
+  // ─── LAYER 13: Crop rows, garden plot, pond ────────
+  place CropField at (25, 18);         // strawberry / leek / potato rows
+  place Plot      at (32, 17);         // fenced plot with crops
+  place PondBig   at (29, 22);         // stone-ringed pond (autotile)
+
+  // ─── LAYER 14: Orchard of tall trees ───────────────
+  place TallOak  at (31, 8);
+  place TallPine at (38, 8);
+  place TallOak  at (26, 16);
+  place TallPine at (39, 16);
+  place TallOak  at (37, 22);
+
+  // ─── LAYER 15: Lampposts on the farm side ──────────
+  place Lamppost at (24, 12);          // east bridgehead, north
+  place Lamppost at (24, 15);          // east bridgehead, south
+  place Lamppost at (32, 16);
+  place Lamppost at (38, 12);
+
+  // ─── LAYER 16: Riverbank decoration ────────────────
+  // Reeds (bushes) and rocks softening the shoreline.
+  tile ROCK at (18, 4);
+  tile BUSH at (18, 7);
+  tile ROCK at (18, 20);
+  tile BUSH at (18, 23);
+  tile BUSH at (23, 5);
+  tile ROCK at (23, 9);
+  tile BUSH at (23, 19);
+  tile ROCK at (23, 24);
+
+  // ─── LAYER 17: Path network — every door joined to the road ─
+  // The main road (rows 13-14) is the trunk; these lanes branch
+  // off it to each building entrance and link to one another, so
+  // the whole village is one connected footpath system.
+
+  // WEST-NORTH: house fronts + stall openings -> the stone plaza
+  // (the plaza's south edge already meets the road).
+  tile PATH at (6, 7);                 // HouseRed front (row 6) -> plaza
+  tile PATH at (12, 7);                // HouseBlue front (row 6) -> plaza
+  tile PATH at (5, 11);                // left stall opening -> plaza
+  tile PATH at (4, 11);
+  tile PATH at (13, 11);               // right stall opening -> plaza
+  tile PATH at (14, 11);
+
+  // WEST-SOUTH: a back-lane (row 21) along the south-facing doors
+  // of the shop, wood cottage and garden, linked up to the road
+  // by two verticals through the gaps between the buildings.
+  row PATH from (3, 21) to (15, 21);
+  tile PATH at (7, 15);                // west link (Shop / WoodCottage gap)
+  tile PATH at (7, 16);
+  tile PATH at (7, 17);
+  tile PATH at (7, 18);
+  tile PATH at (7, 19);
+  tile PATH at (7, 20);
+  tile PATH at (12, 15);               // east link (WoodCottage / Garden gap)
+  tile PATH at (12, 16);
+  tile PATH at (12, 17);
+  tile PATH at (12, 18);
+  tile PATH at (12, 19);
+  tile PATH at (12, 20);
+
+  // EAST-NORTH: pasture gate -> road, and chicken-coop gate ->
+  // road routed east around the orange cottage.
+  tile PATH at (28, 8);                // pasture gate (rows 7) -> road
+  tile PATH at (28, 9);
+  tile PATH at (28, 10);
+  tile PATH at (28, 11);
+  tile PATH at (28, 12);
+  tile PATH at (35, 7);                // coop gate (35,6) -> east, around HouseOrange
+  tile PATH at (36, 7);
+  tile PATH at (37, 7);
+  tile PATH at (37, 8);
+  tile PATH at (37, 9);
+  tile PATH at (37, 10);
+  tile PATH at (37, 11);
+  tile PATH at (37, 12);
+
+  // EAST-SOUTH: a back-lane (row 21) fronting the crop field and
+  // the plot's south gate, linked to the road through their gap.
+  row PATH from (25, 21) to (34, 21);
+  tile PATH at (30, 15);               // link (CropField / Plot gap) -> road
+  tile PATH at (30, 16);
+  tile PATH at (30, 17);
+  tile PATH at (30, 18);
+  tile PATH at (30, 19);
+  tile PATH at (30, 20);
+
+  // ─── LAYER 18: Signposts at the forks ──────────────
+  tile SIGNPOST at (2, 12);            // west road -> Harbor
+  tile SIGNPOST at (39, 12);           // east road -> Farmstead
+  tile SIGN_WOODEN at (16, 12);        // entering the town
+  tile SIGN_FLOWER at (25, 12);        // entering the farmland
+
+  // ─── LAYER 19: Portals into a cottage interior ─────
+  // Same interior file served from two doors (engine's
+  // single-slot return memory sends the player back outside
+  // whichever door they entered).
+  portal at (13, 6) -> "cottage_interior.map";   // blue cottage front (west bank)
+  portal at (35, 12) -> "cottage_interior.map";  // orange cottage front (east bank)
+
+  // ─── LAYER 20: Player spawns on the bridge ─────────
+  // A clean reveal — town to the left, farmland to the right,
+  // river flowing north and south.
+  player at (20, 14);
+}

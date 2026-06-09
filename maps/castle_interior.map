@@ -1,53 +1,72 @@
 // =====================================================
-// Castle Interior — throne room. Reached by stepping
-// through the Castle gate in kingdom.map. The south
-// door is a portal back; the kingdom remembers where
-// you stood, so you exit right at the gate.
+// Castle Interior — throne room with proper royal trim.
+// Stone floor + parquet runner from the south door up
+// to the throne; rugs, bookshelves, plants, lamps and
+// torches lining the hall.
 // =====================================================
 
 map CastleInterior {
   size 15, 11;
 
-  // Stone floor for the hall
+  // Stone-floor hall
   fill FLOOR_STONE from (1,1) to (13,9);
 
   // Outer walls
-  row WALL_STONE from (0,0)  to (14,0);    // north
-  row WALL_STONE from (0,0)  to (0,10);    // west
-  row WALL_STONE from (14,0) to (14,10);   // east
-
-  // South wall — split around the south door at col 7
+  row WALL_STONE from (0,0)  to (14,0);   // north
+  row WALL_STONE from (0,0)  to (0,10);   // west
+  row WALL_STONE from (14,0) to (14,10);  // east
   row WALL_STONE from (0,10) to (6,10);
   row WALL_STONE from (8,10) to (14,10);
-  tile DOOR_STONE at (7,10);
-
-  // Stone windows decorate the north wall
+  tile DOOR_STONE   at (7,10);
   tile WINDOW_STONE at (4,0);
   tile WINDOW_STONE at (10,0);
 
-  // ─── The throne dais (parquet runner leading north) ───
+  // ── Throne wall — three banners behind the throne ──
+  tile BANNER_TEAL  at (6,1);
+  tile BANNER_GREEN at (7,1);
+  tile BANNER_TEAL  at (8,1);
+
+  // ── The throne itself (sofa stand-in) and side tables ─
+  tile SOFA  at (7,2);
+  tile TABLE at (5,2);
+  tile TABLE at (9,2);
+  tile FRUIT_BOWL at (5,2);   // golden goblets, by extension
+  tile FRUIT_BOWL at (9,2);
+
+  // ── Red-carpet parquet runner from the door to the throne ─
   row FLOOR_PARQUET from (7,3) to (7,9);
+  // Wider rug centred at the throne base
+  tile RUG_GREEN at (6,3);
+  tile RUG_GREEN at (7,3);
+  tile RUG_GREEN at (8,3);
 
-  // Three banners hanging over the throne
-  tile BANNER_TEAL at (6,1);
-  tile BANNER_TEAL at (7,1);
-  tile BANNER_TEAL at (8,1);
+  // ── Library shelves along the inner walls ─────────
+  tile BOOKSHELF at (1,2);
+  tile BOOKSHELF at (2,2);
+  tile BOOKSHELF at (13,2);
+  tile BOOKSHELF at (12,2);
 
-  // Torches lining the walls
-  tile TORCH at (1,2);
-  tile TORCH at (13,2);
-  tile TORCH at (1,5);
-  tile TORCH at (13,5);
-  tile TORCH at (1,8);
-  tile TORCH at (13,8);
+  // ── Lamps and plants flanking the hall midway ─────
+  tile LAMP  at (1,5);
+  tile LAMP  at (13,5);
+  tile PLANT at (1,8);
+  tile PLANT at (13,8);
 
-  // Two flower vases beside the throne
-  tile FLOWER at (5,2);
-  tile FLOWER at (9,2);
+  // ── Wall torches between the lamps ────────────────
+  tile TORCH at (1,3);
+  tile TORCH at (13,3);
+  tile TORCH at (1,7);
+  tile TORCH at (13,7);
 
-  // Portal back out — `back` returns to whichever map you entered from.
+  // ── Visitor seating in the audience chamber ──────
+  tile CHAIR at (4,6);
+  tile CHAIR at (10,6);
+  tile CHAIR at (4,7);
+  tile CHAIR at (10,7);
+
+  // Portal back out — `back` returns to whichever map sent us here.
   portal at (7,10) -> back;
 
-  // Player spawns just inside the south door, facing north.
+  // Player spawns just inside the south door
   player at (7,9);
 }

@@ -32,6 +32,9 @@ public class SheetExtract {
         SHEETS.put("interior", new Object[]{
             "assets/modern_interiors/Modern tiles_Free/Interiors_free/16x16/Room_Builder_free_16x16.png",
             16, 16});
+        SHEETS.put("furniture", new Object[]{
+            "assets/modern_interiors/Modern tiles_Free/Interiors_free/16x16/Interiors_free_16x16.png",
+            16, 16});
     }
 
     /** {sheetKey, col, row, widthCells, heightCells, outName} */
@@ -83,6 +86,18 @@ public class SheetExtract {
         // ────────── MODERN INTERIORS — floor tiles ──────────
         { "interior", 12, 13, 1, 1, "floor_parquet" },  // orange chevron
         { "interior", 12, 11, 1, 1, "floor_stone"   },  // grey stone
+
+        // ────────── MODERN INTERIORS — furniture ──────────
+        { "furniture", 2,  44, 1, 2, "bed"        },   // 32x64 single purple bed
+        { "furniture", 1,  51, 1, 2, "sofa"       },   // 32x64 purple sofa
+        { "furniture", 5,  43, 1, 1, "table"      },   // 32x32 yellow rug-top table
+        { "furniture", 3,  40, 1, 1, "chair"      },   // 32x32 wooden chair
+        { "furniture", 10, 28, 1, 1, "rug_green"  },   // 32x32 small green rug
+        { "furniture", 12, 45, 1, 2, "plant"      },   // 32x64 small potted plant
+        { "furniture", 12, 54, 1, 2, "lamp"       },   // 32x64 blue floor lamp
+        { "furniture", 1,  53, 1, 1, "fruit_bowl" },   // 32x32 fruit basket
+        { "furniture", 1,  33, 1, 2, "bookshelf"  },   // 32x64 wooden bookshelf
+        { "furniture", 8,  57, 1, 2, "cabinet"    },   // 32x64 wooden cabinet
     };
 
     public static void main(String[] args) throws Exception {

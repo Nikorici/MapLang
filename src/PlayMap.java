@@ -47,7 +47,10 @@ public class PlayMap extends JPanel implements KeyListener {
         // Pond auto-tile pieces (all block — they're water/stone)
         "POND_NW", "POND_N", "POND_NE",
         "POND_W",  "POND_C", "POND_E",
-        "POND_SW", "POND_S", "POND_SE"
+        "POND_SW", "POND_S", "POND_SE",
+        // Modern Interiors — furniture (RUG_GREEN stays walkable as a rug)
+        "BED", "SOFA", "TABLE", "CHAIR", "PLANT", "LAMP",
+        "FRUIT_BOWL", "BOOKSHELF", "CABINET"
     );
 
     private int playerX, playerY;
