@@ -35,7 +35,7 @@ A `.map` file looks like a level designer's notebook:
 import "buildings.map";
 import "town.map";
 
-map Kingdom {
+map Eldgate {
   size 40, 24;
 
   neighbor east "farmstead.map";
@@ -188,22 +188,22 @@ MapLang/
 │   └── antlr.jar               ← ANTLR runtime + tool
 │
 ├── parts/                      ← reusable `part` libraries
-│   ├── buildings.map           ← Castle, Watchtower
+│   ├── buildings.map           ← Castle, Watchtower, Cottage (brick)
 │   ├── town.map                ← Cottage, WoodCottage, Inn, Shop, Garden
-│   └── featured.map            ← Fountain, MarketStall, Lighthouse,
-│                                ChickenCoop, CropField, Pasture
+│   ├── featured.map            ← Fountain, MarketStall, Lighthouse,
+│   │                             ChickenCoop, CropField, Pasture
+│   ├── cabins.map              ← BigCabin, TallHouse, Hut, Pond, Plot, Lamppost
+│   └── pixel.map               ← HouseBlue/Orange/Red/SmallBlue, PondBig,
+│                                 BushTile, BenchTile, TallOak, TallPine
 │
 ├── maps/                       ← scenes
-│   ├── kingdom.map             ← FLAGSHIP — central town
-│   ├── harbor.map              ← west neighbor
-│   ├── farmstead.map           ← east neighbor
+│   ├── eldgate.map             ← FLAGSHIP — forest-clearing village
+│   ├── harbor.map              ← west neighbor (coastal)
+│   ├── farmstead.map           ← east neighbor (pastoral)
+│   ├── rivervale.map           ← riverside village split by a bridged river
+│   ├── pixelvillage.map        ← pixel-asset village (multi-cell sprites)
 │   ├── castle_interior.map     ← portal target (throne room)
-│   ├── cottage_interior.map    ← portal target (small room)
-│   ├── tinyvillage.map         ← alternative composed village
-│   ├── world.map               ← coastal kingdom variation
-│   ├── village.map             ← legacy edge-crossing demo
-│   ├── showcase.map            ← original feature soup
-│   └── test.map                ← original simple test
+│   └── cottage_interior.map    ← portal target (furnished home)
 │
 ├── textures/                   ← 32×32 / 32×64 PNGs (one per tile type)
 │   └── *.png                   ← grass, water1/2/3, torch1/2, …
@@ -464,7 +464,8 @@ java -cp src SheetExtract
 | Kenney Roguelike RPG | kenney.nl | CC0 | grass, water, trees, banners |
 | Kenney Tiny Town     | kenney.nl | CC0 | roofs, walls, doors, signposts, arch |
 | Farm RPG 16×16       | itch.io   | free | chickens, cows, crops |
-| Modern Interiors v2.2| itch.io   | free | interior floors (parquet, stone) |
+| Modern Interiors v2.2| itch.io   | free | interior floors + furniture (bed, sofa, table, chair, cabinet, bookshelf, lamp, plant, fruit bowl, rug) |
+| Pixel Woods v2       | itch.io   | free | multi-cell house sprites, autotiled pond, big trees, bushes, benches, signs |
 
 Packs that were considered and dropped:
 
@@ -483,49 +484,56 @@ so the project boots without the Kenney sheets if needed.
 
 ## 8. Demo maps
 
-### The flagship — `maps/kingdom.map`
+### The flagship — `maps/eldgate.map`
 
-A 40×24 central town demonstrating every MapLang feature in one
-intentional scene:
+A 44×28 forest-clearing village demonstrating every MapLang feature in
+one intentional scene (imports four part libraries):
 
-- **Castle** in the north (imported from `parts/buildings.map`)
-- **Stone road** crossing east-west, vertical road from the south
-  gate up to the castle gate
-- **Fountain plaza** with corner rocks and central water
-- **Two market stalls** with banner roofs
-- **Two cottages** on the west, an **Inn** on the east
-- **Pond** in the south-west, **forest** in the south-east
-- **Two portals**: castle gate → throne room, wood cottage door →
-  small interior
+- **Castle** dominating the north (from `parts/buildings.map`)
+- **Dense tree perimeter** split around the river-less edges, with a
+  sandy east-west road and a vertical path up to the castle gate
+- **Sand plaza** at the central crossroads, with a **Fountain**
+- **Houses** scattered around: two **Huts**, a **BigCabin**, a
+  **TallHouse**, and an **Inn**
+- **Garden plot**, **two ponds**, **lampposts** lining the paths,
+  signposts at every fork
+- **South gate** — stone arch flanked by banners
+- `repeat` / `random` / `fill` / `row` / `let` / `tile` all exercised
+- **Two portals**: castle gate → throne room, BigCabin door → cottage
+  interior
 - **Two edge crossings**: west to harbor, east to farmstead
-- Banners and signposts at the key approaches
 
 ### Connected regions
 
 - **`harbor.map`** — coastal: sea, sandy beach, wooden pier with
   lamps, lighthouse, a coastal cottage. Walking east off its edge
-  returns to the kingdom.
+  returns to Eldgate (`neighbor east back`).
 - **`farmstead.map`** — pastoral: fenced cow pasture, chicken coop,
-  two crop fields, farmer's cottage, pond. Walking west off its edge
-  returns to the kingdom.
+  crop fields, farmer's cottage, pond. Walking west off its edge
+  returns to Eldgate.
 
 ### Interior scenes
 
-- **`castle_interior.map`** — throne room with three teal banners, six
-  wall torches, a red parquet runner to the throne.
-- **`cottage_interior.map`** — small room with parquet floor, two
-  windows, a flower as a rug, two torches.
+- **`castle_interior.map`** — 15×11 throne hall: stone floor, a parquet
+  runner from the south door to the throne (sofa) with side tables and
+  goblets, three banners behind it, bookshelves, lamps, plants, wall
+  torches, and visitor seating.
+- **`cottage_interior.map`** — 11×10 furnished home: parquet floor, a
+  bedroom corner (bed, rug, bookshelf, lamp), a kitchen corner (cabinets,
+  plant, fruit bowl), and a central living room (sofa, coffee table,
+  chairs, rug).
 
 Both use `portal at (x,y) -> back;` so the same interior serves any
 number of origins.
 
 ### Other maps
 
-- `tinyvillage.map` — alternative composed village
-- `world.map` — coastal kingdom variation
-- `village.map` — three-region edge-crossing demo (village ↔ forest, road)
-- `showcase.map` — original feature soup
-- `test.map` — original simple test
+- `rivervale.map` — a riverside market village: a river bisects the map
+  and flows off both edges, crossed by a single stone bridge laid in a
+  gap in the water; a town on the west bank and farmland on the east,
+  joined by a connected path network to every door.
+- `pixelvillage.map` — a village built from the pixel-asset pack:
+  multi-cell house sprites, autotiled pond, big trees, benches, signs.
 
 ---
 
@@ -542,10 +550,10 @@ javac -cp "src:lib/antlr.jar" -d src src/*.java
 
 ```bash
 # Interactive viewer (Swing window, hot reload)
-java -cp "src:lib/antlr.jar" Main maps/kingdom.map --play
+java -cp "src:lib/antlr.jar" Main maps/eldgate.map --play
 
 # Just render a PNG to output/
-java -cp "src:lib/antlr.jar" Main maps/kingdom.map
+java -cp "src:lib/antlr.jar" Main maps/eldgate.map
 ```
 
 ### Controls in the viewer
@@ -580,12 +588,12 @@ java -cp src AnimFrames       # water1..3, lava1..3, torch1..2
 
 ### Recommended tour
 
-1. `java -cp "src:lib/antlr.jar" Main maps/kingdom.map --play`
+1. `java -cp "src:lib/antlr.jar" Main maps/eldgate.map --play`
 2. Walk north on the road, enter the castle gate, see the throne room.
 3. Exit south through the throne room's door — you land back at the
    castle gate.
-4. Walk west off the edge into Harbor; back east to the Kingdom.
-5. Walk east off the edge into Farmstead; back west to the Kingdom.
+4. Walk west off the edge into Harbor; back east to Eldgate.
+5. Walk east off the edge into Farmstead; back west to Eldgate.
 6. With the window open, edit `parts/featured.map` (e.g. change a
    `tile FLOWER` to `tile MUSHROOM` inside `Fountain`) and save — the
    import-aware reload picks it up.
@@ -699,9 +707,11 @@ serves arbitrarily many entry points.
 - **Walkability is a hard-coded set in `PlayMap.walls`.** Adding a
   new wall-type tile requires editing Java. A grammar-level
   `blocking TYPE;` declaration would generalise this.
-- **No multi-tile sprites.** Each tile is independently positioned.
-  Pre-rendered houses from the Farm RPG pack can't be placed as a
-  single image; we compose them from per-cell parts instead.
+- **Multi-tile sprites are convention, not grammar.** A tall PNG is
+  drawn as one image anchored at its bottom-left cell (see `pixel.map`'s
+  house sprites), but the rest of its footprint must be covered by hand
+  with invisible ground-tile blockers — the grammar has no native
+  "this sprite occupies W×H cells" declaration.
 - **Same-directory neighbours only.** The file watcher follows the
   current map's directory. A `neighbor` or `portal` pointing into a
   different directory works for the first swap but stops hot-reloading.
@@ -756,6 +766,7 @@ Ranked by impact per effort.
   - Kenney Tiny Town — Kenney.nl (CC0)
   - Farm RPG FREE 16×16 — itch.io (free, credit retained in `assets/`)
   - Modern Interiors Free v2.2 — itch.io (free, credit retained in `assets/`)
+  - Pixel Woods v2 — itch.io (free, credit retained in `assets/`)
 
 Built as a university project. Source code MIT-equivalent; tile art
 under each pack's own license — see `assets/<pack>/License.txt`.
